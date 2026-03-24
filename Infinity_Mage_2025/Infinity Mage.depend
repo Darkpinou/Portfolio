@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1742251007 source:c:\users\illusionsoul\desktop\code\projet c\infinity mage\main.c
+	<stdio.h>
+	<string.h>
+	"header.h"
+
+1742246381 c:\users\illusionsoul\desktop\code\projet c\infinity mage\header.h
+
+1742251000 source:c:\users\illusionsoul\desktop\code\projet c\infinity mage\utils.c
+	<stdio.h>
+	"header.h"
+
+1742251246 source:c:\users\illusionsoul\desktop\code\projet c\infinity mage\combat.c
+	<stdio.h>
+	<stdlib.h>
+	"header.h"
+
+1742233906 source:c:\users\maxch\desktop\cours\hardware et software\projet c\infinity mage\combat.c
+	<stdio.h>
+	<stdlib.h>
+	"header.h"
+
+1742233860 c:\users\maxch\desktop\cours\hardware et software\projet c\infinity mage\header.h
+
+1742233682 source:c:\users\maxch\desktop\cours\hardware et software\projet c\infinity mage\main.c
+	<stdio.h>
+	<string.h>
+	"header.h"
+
+1742223956 source:c:\users\maxch\desktop\cours\hardware et software\projet c\infinity mage\utils.c
+	<stdio.h>
+	"header.h"
+
