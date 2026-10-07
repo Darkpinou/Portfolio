@@ -40,7 +40,7 @@ class AuthController extends AbstractController
         
         $utilisateur = $this->utilisateurRepo->findOneBy(['email' => $email]);
         
-        if ($utilisateur && $utilisateur->getMotDePasse() === $motDePasse) {
+        if ($utilisateur && password_verify($motDePasse, $utilisateur->getMotDePasse())) {
             $request->getSession()->set('user_connected', [
                 'id_user' => $utilisateur->getIdUser(),
                 'email' => $utilisateur->getEmail(),
@@ -74,7 +74,7 @@ class AuthController extends AbstractController
         $utilisateur = new Utilisateur();
         $utilisateur->setEmail($email);
         $utilisateur->setPseudo($pseudo);
-        $utilisateur->setMotDePasse($motDePasse);
+        $utilisateur->setMotDePasse(password_hash($motDePasse, PASSWORD_DEFAULT));
         
         $maxId = $this->em->createQuery('SELECT MAX(u.idUser) FROM App\Entity\Utilisateur u')->getSingleScalarResult();
         $utilisateur->setIdUser(($maxId ?? 0) + 1);

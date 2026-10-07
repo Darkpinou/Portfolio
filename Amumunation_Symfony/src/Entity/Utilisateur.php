@@ -21,7 +21,7 @@ class Utilisateur
     #[ORM\Column(length: 50)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(name: 'mot_de_passe', length: 50)]
+    #[ORM\Column(name: 'mot_de_passe', length: 255)]
     private ?string $motDePasse = null;
 
     #[ORM\OneToMany(mappedBy: 'vendeur', targetEntity: Produit::class)]

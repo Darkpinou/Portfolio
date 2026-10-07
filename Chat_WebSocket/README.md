@@ -1,109 +1,49 @@
-# Salon de Discussion - Chat en Temps Réel
+# Cyber Chat
 
-Application frontend de chat en temps réel développée avec React et WebSocket.
+> Salon de discussion en temps réel : un serveur WebSocket Node.js diffuse instantanément chaque message à tous les clients connectés.
 
-## 🚀 Fonctionnalités
+**Stack** : React 18 · WebSocket (`ws`) · Node.js
+**Contexte** : projet de cours Node.js — EFREI, B2
 
-- **Interface utilisateur moderne** avec design responsive
-- **Connexion WebSocket** pour communication en temps réel
-- **Système d'utilisateurs** avec nom d'utilisateur obligatoire
-- **Messages instantanés** avec affichage en temps réel
-- **Support clavier** (touche Entrée pour envoyer)
-- **Indicateur de connexion** en temps réel
-- **Design responsive** pour mobile et desktop
+![Salon de discussion](docs/salon.png)
 
-## 📋 Prérequis
+## Fonctionnalités
 
-- Node.js (version 14 ou supérieure)
-- npm ou yarn
-- Accès au backend WebSocket (port 8080)
+- Connexion avec un identifiant, puis accès au salon commun.
+- Messages diffusés en temps réel à tous les participants.
+- Indicateur d'état de la connexion (connecté, déconnecté, erreur).
+- Envoi avec la touche Entrée, défilement automatique vers le dernier message.
+- Interface responsive au style « terminal » néon.
 
-## 🛠️ Installation
+## Fonctionnement
 
-1. Cloner le projet :
-```bash
-git clone <repository-url>
-cd sample-websocket-code
+```
+Navigateur A ─┐                          ┌─► Navigateur A
+Navigateur B ─┼─► server.js (ws, :8080) ─┼─► Navigateur B
+Navigateur C ─┘     diffusion à tous      └─► Navigateur C
 ```
 
-2. Installer les dépendances :
+- `server.js` (~40 lignes) : parse chaque message JSON reçu (les messages mal formés sont ignorés) et le renvoie à tous les clients ouverts.
+- `src/App.jsx` : ouvre la connexion à l'entrée dans le salon, la ferme proprement au démontage du composant, et choisit l'URL du serveur selon l'hôte (local ou tunnel ngrok pour tester à plusieurs).
+
+## Choix techniques
+
+| Choix | Pourquoi |
+|---|---|
+| WebSocket plutôt que du polling HTTP | Connexion persistante et bidirectionnelle : le serveur pousse les messages sans que le client ait à les redemander. |
+| Librairie `ws` | Implémentation WebSocket minimale et standard côté Node, sans surcouche. |
+
+## Lancer en local
+
 ```bash
 npm install
+npm run dev     # serveur WebSocket (:8080) + frontend React (:3000)
 ```
 
-## ⚙️ Configuration
+Ouvrir `http://localhost:3000` dans deux onglets pour échanger des messages.
 
-Avant de lancer l'application, vous devez configurer l'adresse du serveur WebSocket :
+## Limites et pistes d'amélioration
 
-1. Ouvrir le fichier `App.js`
-2. Remplacer `<NGROK_PUBLIC_IP>` par votre adresse IP publique Ngrok :
-```javascript
-const socket = new WebSocket('ws://VOTRE_IP_NGROK:8080');
-```
-
-## 🚀 Lancement
-
-Démarrer l'application de développement :
-```bash
-npm start
-```
-
-L'application sera accessible à l'adresse : `http://localhost:3000`
-
-## 📱 Utilisation
-
-1. **Entrer un nom d'utilisateur** sur la page d'accueil
-2. **Cliquer sur "Rejoindre"** pour accéder au salon de discussion
-3. **Taper un message** dans le champ de saisie
-4. **Appuyer sur Entrée** ou cliquer sur "Envoyer" pour poster le message
-5. **Les messages apparaissent** en temps réel pour tous les utilisateurs connectés
-
-## 🔄 Format des Messages
-
-### Envoi (Client → Serveur)
-```json
-{
-  "username": "JohnDoe",
-  "message": "Hello, everyone!"
-}
-```
-
-### Réception (Serveur → Client)
-```json
-{
-  "username": "JohnDoe", 
-  "message": "Hello, everyone!"
-}
-```
-
-## 🎨 Interface
-
-- **Page d'accueil** : Saisie du nom d'utilisateur
-- **Salon de discussion** : 
-  - En-tête avec nom d'utilisateur et statut de connexion
-  - Zone de messages avec défilement automatique
-  - Zone de saisie avec bouton d'envoi
-- **Design responsive** : Adaptation mobile/desktop
-
-## 🔧 Dépannage
-
-### Problèmes de connexion
-- Vérifiez que l'adresse Ngrok est correctement configurée
-- Assurez-vous que le backend est accessible sur le port 8080
-- Vérifiez les paramètres CORS sur le backend
-
-### Messages qui ne s'affichent pas
-- Vérifiez la console du navigateur pour les erreurs WebSocket
-- Confirmez que le format des messages correspond au format attendu
-
-## 📝 Notes Techniques
-
-- Utilisation de React Hooks (useState, useEffect, useRef)
-- Gestion automatique de la connexion WebSocket
-- Nettoyage des ressources lors de la déconnexion
-- Support du responsive design avec CSS Grid et Flexbox
-- Animations CSS pour une meilleure expérience utilisateur
-
-## 🤝 Contribution
-
-Ce projet est une démonstration des fonctionnalités de chat en temps réel avec React et WebSocket.
+- Messages non persistés : un nouvel arrivant ne voit pas l'historique (stockage Redis ou base de données).
+- Pas d'authentification : deux utilisateurs peuvent prendre le même pseudo.
+- Un seul salon : ajouter des salons multiples et un indicateur « en train d'écrire ».
