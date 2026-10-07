@@ -2,7 +2,7 @@
 
 > Salon de discussion en temps réel : un serveur WebSocket Node.js diffuse instantanément chaque message à tous les clients connectés.
 
-**Stack** : React 18 · WebSocket (`ws`) · Node.js
+**Stack** : React 18 · WebSocket (`ws`) · Node.js<br>
 **Contexte** : projet de cours Node.js — EFREI, B2
 
 ![Salon de discussion](docs/salon.png)

@@ -23,7 +23,7 @@ avec une attention particulière à la sécurité et à la fiabilité des donné
 
 Portail sécurisé permettant aux clients professionnels de consulter leurs documents comptables, grilles tarifaires et offres ciblées, accompagné d'un back-office complet pour l'équipe interne.
 
-**Stack** : Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · Supabase (PostgreSQL, Auth, Storage, Vault) · Resend · React Email · Zod
+**Stack** : Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS · Supabase (PostgreSQL, Auth, Storage, Vault) · Resend · React Email · Zod<br>
 **Infrastructure** : monorepo npm workspaces · base hébergée en Union européenne (conformité RGPD)
 
 <table>

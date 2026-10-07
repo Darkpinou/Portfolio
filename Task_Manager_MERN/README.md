@@ -2,8 +2,8 @@
 
 > Application de gestion de tâches organisées en dossiers, avec authentification JWT et trois niveaux de droits.
 
-**Stack** : React 18 · React Router · Node.js · Express · MongoDB (Mongoose) · JWT · bcrypt
-**Contexte** : projet de groupe (4 personnes) — EFREI, B2
+**Stack** : React 18 · React Router · Node.js · Express · MongoDB (Mongoose) · JWT · bcrypt<br>
+**Contexte** : projet de groupe (4 personnes) — EFREI, B2<br>
 **Mon rôle** : **développement du frontend React** (pages, composants, routage protégé, contexte d'authentification, appels API).
 
 ## Fonctionnalités

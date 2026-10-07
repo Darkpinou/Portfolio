@@ -2,7 +2,7 @@
 
 > Marketplace inspirée d'Ammu-Nation (GTA) : les utilisateurs publient des annonces d'armes et d'objets de jeux vidéo, les achètent via un panier et passent commande.
 
-**Stack** : PHP 8.2 · Symfony 7 · Doctrine ORM · Twig · PostgreSQL · Docker Compose
+**Stack** : PHP 8.2 · Symfony 7 · Doctrine ORM · Twig · PostgreSQL · Docker Compose<br>
 **Contexte** : projet de cours *Serveur Web* — EFREI, 2026
 
 ![Page d'accueil](docs/accueil.png)
