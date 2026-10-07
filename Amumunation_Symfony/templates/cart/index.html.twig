@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Ammunition Shop{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h1>Votre Panier</h1>
+            <hr>
+
+            {% if cartItems|length > 0 %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Prix</th>
+                            <th>Quantité</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cartItems %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.price }}€</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.total }}€</td>
+                            <td>
+                                <form method="POST" action="{{ path('app_cart_remove', {'id': item.id}) }}" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="mt-4 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Total: <span class="text-primary">{{ total }}€</span></h4>
+                    <form method="post" action="{{ path('app_cart_clear') }}">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Vider le panier</button>
+                    </form>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{{ path('annonces') }}" class="btn btn-secondary">Continuer les achats</a>
+                    <a href="{{ path('app_checkout') }}" class="btn btn-primary">Passer la commande</a>
+                </div>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    Votre panier est vide
+                </div>
+
+                <div class="mt-4">
+                    <a href="{{ path('annonces') }}" class="btn btn-primary">Voir nos produits</a>
+                    <a href="{{ path('accueil') }}" class="btn btn-secondary">Retour à l'accueil</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

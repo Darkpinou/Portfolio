@@ -1,0 +1,298 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces - AmumuNation{% endblock %}
+
+{% block body %}
+<div class="annonces-page">
+    <div class="annonces-wrapper container-fluid py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="annonces-title mb-0">Annonces</h2>
+            {% if app.session.get('user_connected') %}
+                <a href="{{ path('creer_annonce') }}" class="btn btn-primary btn-create">+ Créer une annonce</a>
+            {% endif %}
+        </div>
+
+        {% if annonces|length > 0 %}
+            {# Carte principale en haut (première annonce) #}
+            {% set featured = annonces[0] %}
+            <div class="featured-card-wrapper mb-4">
+                <div class="featured-card">
+                    <div class="featured-image">
+                        {% if featured.image %}
+                            <img src="{{ asset('img_armes/' ~ featured.image) }}" alt="{{ featured.nom }}">
+                        {% else %}
+                            <img src="{{ asset('img/logo.png') }}" alt="{{ featured.nom }}">
+                        {% endif %}
+                    </div>
+                    <div class="featured-info">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <div>
+                                <h3 class="featured-name">{{ featured.nom }}</h3>
+                                <p class="featured-rarity">{{ featured.rarete }}</p>
+                            </div>
+                            <button class="favorite-btn" type="button">❤</button>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="featured-price">{{ featured.prix }}€</span>
+                            <a href="{{ path('detail_annonce', {'idProduit': featured.idProduit}) }}" class="btn btn-outline-light btn-sm">Voir plus</a>
+                        </div>
+                        <div class="featured-dots">
+                            <span class="dot active"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# Liste des autres annonces #}
+            <div class="annonces-list">
+                {% for annonce in annonces %}
+                    <div class="annonce-line annonce-rarete-{{ annonce.rarete|lower }}">
+                        <div class="annonce-line-image">
+                            {% if annonce.image %}
+                                <img src="{{ asset('img_armes/' ~ annonce.image) }}" alt="{{ annonce.nom }}">
+                            {% else %}
+                                <img src="{{ asset('img/logo.png') }}" alt="{{ annonce.nom }}">
+                            {% endif %}
+                        </div>
+                        <div class="annonce-line-body">
+                            <div class="annonce-line-main">
+                                <div>
+                                    <h4 class="annonce-line-title">{{ annonce.nom }}</h4>
+                                    <p class="annonce-line-rarity">{{ annonce.rarete }}</p>
+                                </div>
+                                <button class="favorite-btn small" type="button">❤</button>
+                            </div>
+                            <div class="annonce-line-footer">
+                                <span class="annonce-line-price">{{ annonce.prix }}€</span>
+                                <a href="{{ path('detail_annonce', {'idProduit': annonce.idProduit}) }}" class="btn btn-outline-light btn-sm">Voir plus</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info mt-4">
+                Aucune annonce disponible pour le moment.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .annonces-page {
+        background-color: #3a3b3f; /* gris sombre proche de la maquette */
+        min-height: calc(100vh - 120px);
+        padding-bottom: 40px;
+    }
+
+    .annonces-wrapper {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .annonces-title {
+        color: var(--text-main);
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .btn-create {
+        border-radius: 999px;
+        padding-inline: 24px;
+        background-color: var(--primary-green) !important;
+        border-color: var(--primary-green) !important;
+    }
+
+    .featured-card-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .featured-card {
+        display: flex;
+        background: #85853c; /* kaki plus doux */
+        border-radius: 22px;
+        overflow: hidden;
+        max-width: 920px;
+        width: 100%;
+        position: relative;
+    }
+
+    .featured-image {
+        background: #ffffff;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 260px;
+    }
+
+    .featured-image img {
+        max-width: 100%;
+        max-height: 220px;
+        object-fit: contain;
+    }
+
+    .no-image {
+        width: 220px;
+        height: 160px;
+        border-radius: 16px;
+        background: #e5e7eb;
+    }
+
+    .featured-info {
+        flex: 1;
+        padding: 22px 28px 40px;
+        position: relative;
+    }
+
+    .featured-name {
+        font-size: 20px;
+        margin: 0;
+        color: #111827;
+    }
+
+    .featured-rarity {
+        margin: 4px 0 0;
+        font-weight: 700;
+        color: #facc15; /* jaune pour Legendary */
+    }
+
+    .featured-price {
+        font-size: 20px;
+        font-weight: 600;
+        color: #111827;
+    }
+
+    .favorite-btn {
+        border: none;
+        background: transparent;
+        font-size: 22px;
+        color: #ef4444;
+        cursor: pointer;
+    }
+
+    .favorite-btn.small {
+        font-size: 18px;
+    }
+
+    .featured-dots {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 50%);
+        display: flex;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #4b4d52;
+        box-shadow: 0 0 0 3px #8b5cf6; /* encadrement violet comme sur la maquette */
+    }
+
+    .featured-dots .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: #6b7280;
+    }
+
+    .featured-dots .dot.active {
+        background: #e5e7eb;
+    }
+
+    .annonces-list {
+        margin-top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .annonce-line {
+        display: flex;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #374151;
+    }
+
+    .annonce-line-image {
+        background: #ffffff;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 120px;
+    }
+
+    .annonce-line-image img {
+        max-width: 100px;
+        max-height: 80px;
+        object-fit: contain;
+    }
+
+    .annonce-line-body {
+        flex: 1;
+        padding: 10px 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .annonce-line-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .annonce-line-title {
+        margin: 0;
+        font-size: 14px;
+        color: #f9fafb;
+    }
+
+    .annonce-line-rarity {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+        color: #facc15;
+    }
+
+    .annonce-line-footer {
+        margin-top: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .annonce-line-price {
+        font-size: 14px;
+        font-weight: 600;
+        color: #f9fafb;
+    }
+
+    .annonce-rarete-legendary {
+        background: #8a8c3b;
+    }
+
+    .annonce-rarete-mythic {
+        background: #7f1d1d;
+    }
+
+    .annonce-rarete-rare {
+        background: #1e3a8a;
+    }
+
+    @media (max-width: 768px) {
+        .featured-card {
+            flex-direction: column;
+        }
+
+        .featured-image {
+            min-width: 100%;
+        }
+    }
+</style>
+{% endblock %}

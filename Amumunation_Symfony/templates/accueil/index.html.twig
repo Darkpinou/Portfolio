@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - AmumuNation | Achetez et vendez des armes de jeu vidéo{% endblock %}
+
+{% block body %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Bienvenue sur AmumuNation</h1>
+        <p class="lead">La place de marché pour acheter et revendre des armes et objets inspirés de vos jeux préférés</p>
+        <div class="search-bar">
+            <form action="{{ path('annonces') }}" method="GET" class="d-flex">
+                <input type="text" name="q" class="form-control" placeholder="Cherchez une arme, un objet, un jeu..." />
+                <button type="submit" class="btn-search">Rechercher</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <section class="featured-section mt-3">
+        <h2>Annonces en vedette</h2>
+        {% if featuredAnnonces is defined and featuredAnnonces|length > 0 %}
+            <div class="row">
+                {% for produit in featuredAnnonces %}
+                    <div class="col-md-4 mb-3">
+                        <a href="{{ path('detail_annonce', {'idProduit': produit.idProduit}) }}" class="text-decoration-none">
+                            <div class="item-card">
+                                <div class="item-image">
+                                    {% if produit.image %}
+                                        <img src="{{ asset('img_armes/' ~ produit.image) }}" alt="{{ produit.nom }}" style="max-height: 140px; max-width: 100%; object-fit: contain;">
+                                    {% else %}
+                                        <img src="{{ asset('img/logo.png') }}" alt="{{ produit.nom }}" style="max-height: 140px; max-width: 100%; object-fit: contain;">
+                                    {% endif %}
+                                </div>
+                                <h4>{{ produit.nom }}</h4>
+                                <p class="price">{{ produit.prix }}€</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        Les annonces seront disponibles après la connexion de la base de données.
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

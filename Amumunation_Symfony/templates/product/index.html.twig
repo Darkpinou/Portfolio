@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ title }} - Ammunition Shop{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Nos Produits</h1>
+            <p class="lead">Découvrez notre sélection de munitions</p>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        {% for product in products %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="text-muted"><small>{{ product.category }}</small></p>
+                    <h4 class="text-primary">{{ product.price }}€</h4>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{{ path('app_product_show', {'id': product.id}) }}" class="btn btn-primary w-100">Voir les détails</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <a href="{{ path('accueil') }}" class="btn btn-secondary">Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

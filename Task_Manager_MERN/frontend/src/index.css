@@ -1,0 +1,28 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:#f5f5f5;
+  color:#333;
+}
+button{
+  cursor:pointer;
+  border:none;
+  padding:8px 16px;
+  border-radius:5px;
+  font-size:14px;
+}
+input,select,textarea{
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:5px;
+  font-size:14px;
+  width:100%;
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:#3498db;
+}

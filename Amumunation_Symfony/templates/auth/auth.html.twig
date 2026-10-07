@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Connexion / Inscription - AmumuNation{% endblock %}
+{% block body %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <ul class="nav nav-tabs mb-4" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="connexion-tab" data-bs-toggle="tab" data-bs-target="#connexion" type="button" role="tab">Connexion</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="inscription-tab" data-bs-toggle="tab" data-bs-target="#inscription" type="button" role="tab">Inscription</button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="connexion" role="tabpanel">
+              <h3 class="mb-4">Se connecter</h3>
+              <form method="POST" action="{{ path('auth') }}">
+                <input type="hidden" name="mode" value="connexion">
+                <div class="mb-3">
+                  <label for="email_connexion" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email_connexion" name="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password_connexion" class="form-label">Mot de passe</label>
+                  <input type="password" class="form-control" id="password_connexion" name="mot_de_passe" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="inscription" role="tabpanel">
+              <h3 class="mb-4">S'inscrire</h3>
+              <form method="POST" action="{{ path('auth') }}">
+                <input type="hidden" name="mode" value="inscription">
+                <div class="mb-3">
+                  <label for="email_inscription" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email_inscription" name="email" required>
+                </div>
+                <div class="mb-3">
+                  <label for="pseudo" class="form-label">Pseudo</label>
+                  <input type="text" class="form-control" id="pseudo" name="pseudo" required>
+                </div>
+                <div class="mb-3">
+                  <label for="password_inscription" class="form-label">Mot de passe</label>
+                  <input type="password" class="form-control" id="password_inscription" name="mot_de_passe" required>
+                </div>
+                <div class="mb-3">
+                  <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
+                  <input type="password" class="form-control" id="confirm_password" name="confirmer_mot_de_passe" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

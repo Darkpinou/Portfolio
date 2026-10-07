@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}AmumuNation - Achetez et vendez des armes et objets inspirés de jeux vidéo{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🎮</text></svg>">
+        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <style>
+            :root {
+                --primary-bg: #050608;           /* noir très sombre */
+                --primary-green: #047857;       /* vert émeraude logo */
+                --light-green: #22c55e;         /* vert plus clair */
+                --accent-gold: #facc15;         /* doré logo */
+                --text-main: #f5f5f5;           /* texte principal clair */
+                --text-muted: #9ca3af;          /* texte secondaire */
+                --card-bg: #0b1016;             /* fond des cartes */
+                --border-soft: #1f2933;         /* bordures / séparateurs */
+            }
+
+            * {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                background-color: var(--primary-bg);
+                color: var(--text-main);
+            }
+
+            /* Navbar */
+            .navbar {
+                background: linear-gradient(90deg, #01492f, #047857) !important; /* vert sombre/émeraude proche maquette */
+                border-bottom: none;
+                padding: 8px 0;
+            }
+
+            .navbar-brand {
+                font-size: 24px;
+                color: var(--text-main) !important;
+                font-weight: bold;
+                letter-spacing: -1px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .navbar-logo-img {
+                height: 40px;
+            }
+
+            .navbar-logo-text {
+                height: 24px;
+            }
+
+            .nav-link {
+                color: var(--text-main) !important;
+                font-weight: 500;
+                transition: opacity 0.2s;
+            }
+
+            .nav-link:hover {
+                opacity: 0.8;
+            }
+
+            .navbar-search {
+                flex: 1;
+                max-width: 500px;
+                margin: 0 24px;
+            }
+
+            .navbar-search-inner {
+                display: flex;
+                align-items: center;
+                background: #f9fafb;
+                border-radius: 999px;
+                padding: 4px 14px;
+            }
+
+            .navbar-search-inner input {
+                border: none;
+                outline: none;
+                flex: 1;
+                background: transparent;
+                font-size: 14px;
+            }
+
+            .navbar-search-icon {
+                margin-right: 8px;
+                color: #6b7280;
+            }
+
+            .navbar-right {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .btn-navbar-primary {
+                border-radius: 999px;
+                padding: 6px 16px;
+                background: #111827;
+                color: #f9fafb;
+                border: 1px solid #111827;
+                font-size: 14px;
+            }
+
+            .btn-navbar-primary:hover {
+                background: #020617;
+                color: #f9fafb;
+            }
+
+            .navbar-icon-btn {
+                width: 34px;
+                height: 34px;
+                border-radius: 999px;
+                border: none;
+                background: rgba(15, 23, 42, 0.35);
+                color: #f9fafb;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                background: radial-gradient(circle at top left, rgba(63, 212, 160, 0.18), transparent 55%),
+                            radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.16), transparent 55%),
+                            #050608;
+                color: var(--text-main);
+                padding: 60px 20px;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 42px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .hero-content .lead {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+
+            .search-bar {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .search-bar form {
+                gap: 0;
+            }
+
+            .search-bar input {
+                border-radius: 4px 0 0 4px;
+                border: none;
+                padding: 12px;
+            }
+
+            .btn-search {
+                background: var(--ebay-red);
+                color: white;
+                border: none;
+                padding: 12px 30px;
+                border-radius: 0 4px 4px 0;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .btn-search:hover {
+                background: #d26a0f;
+            }
+
+            /* Categories Section */
+            .categories-section h2,
+            .featured-section h2 {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 30px;
+                color: var(--text-main);
+            }
+
+            .category-card {
+                background: var(--card-bg);
+                border: 1px solid var(--border-soft);
+                border-radius: 8px;
+                padding: 25px;
+                text-align: center;
+                transition: all 0.3s;
+                cursor: pointer;
+            }
+
+            .category-card:hover {
+                box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+                border-color: var(--primary-green);
+                transform: translateY(-4px);
+            }
+
+            .category-icon {
+                font-size: 50px;
+                margin-bottom: 15px;
+            }
+
+            .category-card h3 {
+                font-size: 20px;
+                margin-bottom: 10px;
+                color: var(--text-main);
+            }
+
+            .category-card p {
+                color: var(--text-muted);
+                margin-bottom: 15px;
+            }
+
+            .category-card a {
+                color: var(--light-green);
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .category-card a:hover {
+                text-decoration: underline;
+            }
+
+            /* Item Cards */
+            .item-card {
+                background: var(--card-bg);
+                border: 1px solid var(--border-soft);
+                border-radius: 8px;
+                overflow: hidden;
+                transition: all 0.3s;
+            }
+
+            .item-card:hover {
+                box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+                border-color: var(--primary-green);
+            }
+
+            .item-image {
+                background: radial-gradient(circle at top, rgba(63, 212, 160, 0.18), transparent 60%), #050608;
+                text-align: center;
+                padding: 40px 20px;
+                font-size: 60px;
+                min-height: 180px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .item-card h4 {
+                padding: 12px 15px 0;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--text-main);
+                margin: 0;
+            }
+
+            .price {
+                color: var(--accent-gold);
+                font-weight: bold;
+                font-size: 18px;
+                padding: 8px 15px 0;
+                margin: 0;
+            }
+
+            .seller {
+                font-size: 12px;
+                color: var(--text-muted);
+                padding: 0 15px;
+                margin: 0;
+            }
+
+            .item-card .btn-sm {
+                width: calc(100% - 30px);
+                margin: 15px;
+            }
+
+            /* Filters */
+            .filters {
+                background: var(--card-bg);
+                border: 1px solid var(--border-soft);
+                border-radius: 8px;
+                padding: 20px;
+            }
+
+            .filter-group {
+                margin-bottom: 20px;
+            }
+
+            .filter-group:last-child {
+                margin-bottom: 0;
+            }
+
+            .filter-label {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 10px;
+                color: var(--text-main);
+            }
+
+            /* Footer */
+            footer {
+                background: #020308 !important;
+                color: var(--text-muted);
+                margin-top: 60px;
+            }
+
+            /* Buttons */
+            .btn-primary {
+                background: var(--primary-green) !important;
+                border-color: var(--primary-green) !important;
+                font-weight: bold;
+            }
+
+            .btn-primary:hover {
+                background: var(--light-green) !important;
+                border-color: var(--light-green) !important;
+            }
+
+            /* Results Header */
+            .results-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+
+            .results-header h2 {
+                margin: 0;
+                font-size: 20px;
+            }
+
+            .sort-options {
+                width: 200px;
+            }
+        </style>
+        
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('accueil') }}">
+                    <img src="{{ asset('img/logo.png') }}" alt="AmumuNation" class="navbar-logo-img">
+                    <img src="{{ asset('img/logo_txt.png') }}" alt="AmumuNation" class="navbar-logo-text d-none d-sm-inline">
+                </a>
+
+                <div class="navbar-search d-none d-md-block">
+                    <form action="{{ path('annonces') }}" method="get" class="navbar-search-inner">
+                        <span class="navbar-search-icon">☰</span>
+                        <input type="text" name="q" placeholder="Recherche ...">
+                    </form>
+                </div>
+
+                <div class="navbar-right">
+                    {% if app.session.get('user_connected') %}
+                        <a href="{{ path('creer_annonce') }}" class="btn btn-navbar-primary d-none d-sm-inline-flex align-items-center gap-1">
+                            <span>＋</span>
+                            <span>Créer une Annonce</span>
+                        </a>
+                    {% endif %}
+                    <button type="button" class="navbar-icon-btn d-none d-sm-flex" title="Accueil">🏠</button>
+                    <button type="button" class="navbar-icon-btn d-none d-sm-flex" title="Notifications">🔔</button>
+                    <button type="button" class="navbar-icon-btn d-none d-sm-flex" title="Favoris">❤</button>
+
+                    {% if app.session.get('user_connected') %}
+                        <span class="d-none d-sm-inline-block ms-2 me-1" style="color: var(--text-main); font-size: 14px;">
+                            {{ app.session.get('user_connected').pseudo }}
+                        </span>
+                        <a href="{{ path('deconnexion') }}" class="navbar-icon-btn d-none d-sm-flex" title="Déconnexion">⇦</a>
+                    {% else %}
+                        <a href="{{ path('auth') }}" class="navbar-icon-btn d-none d-sm-flex" title="Connexion / Inscription">👤</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <!-- Flash Messages -->
+        <div class="container mt-3">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type == 'success' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <!-- Main Content -->
+        {% block body %}{% endblock %}
+
+        <!-- Footer -->
+        <footer class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>AmumuNation</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ path('accueil') }}" class="text-decoration-none text-muted">Accueil</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Acheter</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ path('annonces') }}" class="text-decoration-none text-muted">Parcourir</a></li>
+                            <li><a href="{{ path('app_cart') }}" class="text-decoration-none text-muted">Mon panier</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Légal</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="" class="text-decoration-none text-muted">Conditions</a></li>
+                            <li><a href="" class="text-decoration-none text-muted">Confidentialité</a></li>
+                        </ul>
+                    <div class="col-md-3">
+                        <h5>Légal</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{{ path('contact') }}" class="text-decoration-none text-muted">Contact</a></li>
+                            <li><a href="" class="text-decoration-none text-muted">Conditions</a></li>
+                            <li><a href="" class="text-decoration-none text-muted">Confidentialité</a></li>
+                        </ul>
+                    </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
